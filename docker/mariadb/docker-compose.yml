@@ -1,0 +1,30 @@
+version: "3.2"
+
+services:
+  mariadb:
+    build:
+      context: mariadb/
+      args:
+        MARIADB_VERSION: $MARIADB_VERSION
+    container_name: mariadb-$MARIADB_VERSION
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mariadb/conf.d:/etc/mysql/conf.d
+      - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .env
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root0!
+      MYSQL_DATABASE: agramar
+      MYSQL_USER: agramar
+      MYSQL_PASSWORD: agramar0!
+      TZ: Asia/Seoul
+    networks:
+      - backend
+    restart: always
+
+networks:
+  backend:
+    driver: bridge

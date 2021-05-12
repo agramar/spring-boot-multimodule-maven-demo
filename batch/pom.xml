@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>batch</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>batch</name>
+    <description>hotel batch module</description>
+
+    <parent>
+        <groupId>kr.co.agramar.demo</groupId>
+        <artifactId>root</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../root</relativePath>
+    </parent>
+
+    <properties>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>kr.co.agramar.demo</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${finalName}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.5</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
