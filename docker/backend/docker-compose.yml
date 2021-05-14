@@ -12,6 +12,7 @@ services:
     volumes:
       - ./mariadb/conf.d:/etc/mysql/conf.d
       - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
+      - ./mariadb/data:/var/lib/mysql
     env_file: .env
     environment:
       MYSQL_HOST: localhost
@@ -21,6 +22,21 @@ services:
       MYSQL_USER: agramar
       MYSQL_PASSWORD: agramar0!
       TZ: Asia/Seoul
+    networks:
+      - backend
+    restart: always
+
+  redis:
+    build:
+      context: redis/
+      args:
+        REDIS_VERSION: $REDIS_VERSION
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/redis.conf/:/usr/local/etc/redis.conf
+      - ./redis/redis.log:/usr/local/redis/redis.log
+      - ./redis/data:/usr/local/redis/data
     networks:
       - backend
     restart: always

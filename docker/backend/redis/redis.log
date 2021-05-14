@@ -1,0 +1,9 @@
+
+1:C 14 May 2021 05:34:22.177 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 14 May 2021 05:34:22.184 # Redis version=6.2.3, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 14 May 2021 05:34:22.191 # Configuration loaded
+1:M 14 May 2021 05:34:22.198 * monotonic clock: POSIX clock_gettime
+1:M 14 May 2021 05:34:22.205 * Running mode=standalone, port=6379.
+1:M 14 May 2021 05:34:22.207 # Server initialized
+1:M 14 May 2021 05:34:22.209 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 14 May 2021 05:34:22.211 * Ready to accept connections
