@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor
@@ -22,4 +24,8 @@ public class DemoEntity {
 
 	@Column(name = "description")
 	private String description;
+
+	@Column(name = "reg_dt")
+	@CreationTimestamp
+	private LocalDateTime regDate;
 }
