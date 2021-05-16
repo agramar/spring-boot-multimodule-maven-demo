@@ -30,7 +30,6 @@ public class KafkaConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, String> filterKafkaListenerContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(consumerConfig()));
-		factory.setRecordFilterStrategy(record -> !record.value().contains("collectItem"));
 		factory.setBatchListener(true);
 		factory.getContainerProperties().setPollTimeout(kafkaProperties.getListener().getPollTimeout().toMillis());
 		return factory;

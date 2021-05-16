@@ -1,0 +1,7 @@
+scalar LocalDateTime
+
+type Demo {
+	id: ID!
+	description: String
+	regDate: LocalDateTime!
+}

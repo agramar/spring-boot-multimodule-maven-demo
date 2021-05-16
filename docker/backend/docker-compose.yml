@@ -24,7 +24,6 @@ services:
       TZ: Asia/Seoul
     networks:
       - backend
-    restart: always
 
   redis:
     build:
@@ -39,7 +38,6 @@ services:
       - ./redis/data:/usr/local/redis/data
     networks:
       - backend
-    restart: always
 
   zoo1:
     image: zookeeper:$ZK_VERSION
@@ -76,10 +74,10 @@ services:
       KAFKA_JMX_HOSTNAME: ${DOCKER_HOST_IP:-127.0.0.1}
     volumes:
       - ./zk-single-kafka-single/kafka1/data:/var/lib/kafka/data
-    networks:
-      - backend
     depends_on:
       - zoo1
+    networks:
+      - backend
 
 networks:
   backend:

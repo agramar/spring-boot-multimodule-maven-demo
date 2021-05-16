@@ -1,0 +1,4 @@
+type Mutation {
+	createDemo(input: DemoInput!): Demo!
+	updateDemo(id: ID!, description: String!) : Demo!
+}

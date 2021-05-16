@@ -3,13 +3,13 @@
 	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 	<include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
+	<springProperty scope="context" name="ACTIVE_PROFILES" source="spring.profiles.active" />
 	<springProperty scope="context" name="SERVICE_NAME" source="spring.application.name"/>
 	<springProperty scope="context" name="LOGSTASH_HOST" source="logging.logstash.host"/>
 	<springProperty scope="context" name="LOGSTASH_PORT" source="logging.logstash.port"/>
-	<springProperty scope="context" name="ACTIVE_PROFILES" source="spring.profiles.active" />
 
 	<property name="LOG_FILE_PREFIX" value="api"/>
-	<property name="LOG_PATH" value="/webapp/logs/api"/>
+	<property name="LOG_PATH" value="logs/api"/>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -31,47 +31,30 @@
 		</encoder>
 	</appender>
 
-	<!--	<appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-	<!--		<File>${LOG_PATH}/${LOG_FILE_PREFIX}.json</File>-->
-	<!--		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-	<!--			<fileNamePattern>${LOG_PATH}/${LOG_FILE_PREFIX}_%d{yyyy-MM-dd}.%i.json</fileNamePattern>-->
-	<!--			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
-	<!--				<maxFileSize>200MB</maxFileSize>-->
-	<!--			</timeBasedFileNamingAndTriggeringPolicy>-->
-	<!--			<maxHistory>30</maxHistory>-->
-	<!--		</rollingPolicy>-->
-	<!--		<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
-	<!--			<timestampPattern>yyyy-MM-dd HH:mm:ss.SSS</timestampPattern>-->
-	<!--			<includeContext>false</includeContext>-->
-	<!--			<includeCallerData>true</includeCallerData>-->
-	<!--			<fieldNames>-->
-	<!--				<timestamp>timestamp</timestamp>-->
-	<!--				<version>[ignore]</version>-->
-	<!--				<levelValue>[ignore]</levelValue>-->
-	<!--			</fieldNames>-->
-	<!--			<customFields>{"appname":"${SERVICE_NAME}", "hostname":"${HOSTNAME}", "profiles":"${ACTIVE_PROFILES}"}</customFields>-->
-	<!--		</encoder>-->
-	<!--	</appender>-->
-
-	<!--	<appender name="JSON_SOCKET" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
-	<!--		<remoteHost>${LOGSTASH_HOST}</remoteHost>-->
-	<!--		<port>${LOGSTASH_PORT}</port>-->
-	<!--		<keepAliveDuration>1 minute</keepAliveDuration>-->
-	<!--		<reconnectionDelay>3 second</reconnectionDelay>-->
-	<!--		<writeBufferSize>16384</writeBufferSize>-->
-	<!--		<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
-	<!--			<includeContext>false</includeContext>-->
-	<!--			<includeCallerData>true</includeCallerData>-->
-	<!--			<fieldNames>-->
-	<!--				<timestamp>timestamp</timestamp>-->
-	<!--				<version>[ignore]</version>-->
-	<!--				<levelValue>[ignore]</levelValue>-->
-	<!--			</fieldNames>-->
-	<!--			<customFields>{"appname":"${SERVICE_NAME}", "hostname":"${HOSTNAME}", "profiles":"${ACTIVE_PROFILES}"}</customFields>-->
-	<!--		</encoder>-->
-	<!--	</appender>-->
+<!--	<appender name="JSON_SOCKET" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--		<remoteHost>${LOGSTASH_HOST}</remoteHost>-->
+<!--		<port>${LOGSTASH_PORT}</port>-->
+<!--		<keepAliveDuration>1 minute</keepAliveDuration>-->
+<!--		<reconnectionDelay>3 second</reconnectionDelay>-->
+<!--		<writeBufferSize>16384</writeBufferSize>-->
+<!--		<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+<!--			<includeContext>false</includeContext>-->
+<!--			<includeCallerData>true</includeCallerData>-->
+<!--			<fieldNames>-->
+<!--				<timestamp>timestamp</timestamp>-->
+<!--				<version>[ignore]</version>-->
+<!--				<levelValue>[ignore]</levelValue>-->
+<!--			</fieldNames>-->
+<!--			<customFields>{"appname":"${SERVICE_NAME}", "hostname":"${HOSTNAME}", "profiles":"${ACTIVE_PROFILES}"}</customFields>-->
+<!--		</encoder>-->
+<!--	</appender>-->
 
 	<springProfile name="local">
+		<logger name="hibernate.SQL" level="DEBUG"/>
+		<logger name="hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+		<logger name="jdbc.core.JdbcTemplate" level="DEBUG"/>
+		<logger name="jdbc.core.StatementCreatorUtils" level="TRACE"/>
+
 		<root level="INFO">
 			<appender-ref ref="CONSOLE"/>
 			<appender-ref ref="FILE"/>

@@ -21,6 +21,7 @@ public class DemoController {
 
 	@GetMapping(value = "/list")
 	public ResponseEntity<List<DemoVO>> getDemoList() {
+		log.info("getDemoList");
 		return ResponseEntity.ok(demoService.selectDemoList());
 	}
 

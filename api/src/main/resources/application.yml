@@ -34,7 +34,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         jdbc:
           batch_size: 500
           batch_versioned_data: true
@@ -58,7 +58,7 @@ spring:
       enable-auto-commit: true
       auto-offset-reset: latest
       max-poll-records: 500
-      group-id: demo
+      group-id: demo-group
     listener:
       concurrency: 10
       poll-timeout: 30000
@@ -80,6 +80,30 @@ management:
       base-path: /actuator
       exposure:
         include: [ '*' ]
+
+graphql:
+  tools:
+    schema-location-pattern: "**/*.graphqls"
+    introspection-enabled: true
+    use-default-objectmapper: true
+  servlet:
+    mapping: /graphql
+    max-query-depth: 100
+    tracing-enabled: false
+    exception-handlers-enabled: true
+    subscriptions:
+      apollo:
+        keep-alive-enabled: false
+  playground:
+    enabled: true
+
+voyager:
+  enabled: true
+
+logging:
+  logstash:
+    host: localhost
+    port: 5000
 
 ---
 spring:

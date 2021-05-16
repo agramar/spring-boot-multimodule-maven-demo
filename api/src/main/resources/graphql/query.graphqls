@@ -1,0 +1,4 @@
+# All Available queries on this graphql server
+type Query {
+	demo(id: ID): Demo
+}

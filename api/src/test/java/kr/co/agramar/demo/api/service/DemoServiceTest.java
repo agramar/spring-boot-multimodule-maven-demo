@@ -1,5 +1,6 @@
 package kr.co.agramar.demo.api.service;
 
+import kr.co.agramar.demo.api.entity.DemoEntity;
 import kr.co.agramar.demo.api.model.vo.DemoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +19,9 @@ public class DemoServiceTest {
 
 	@Test
 	public void testSaveDemoRepository() {
-		demoService.saveDemoRepository();
+		demoService.saveDemoRepository(DemoEntity.builder()
+			.description("????????????")
+			.build());
 	}
 
 	@Test
