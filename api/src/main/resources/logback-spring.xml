@@ -8,8 +8,8 @@
 	<springProperty scope="context" name="LOGSTASH_HOST" source="logging.logstash.host"/>
 	<springProperty scope="context" name="LOGSTASH_PORT" source="logging.logstash.port"/>
 
-	<property name="LOG_FILE_PREFIX" value="api"/>
-	<property name="LOG_PATH" value="logs/api"/>
+	<property name="LOG_FILE_PREFIX" value="${SERVICE_NAME}"/>
+	<property name="LOG_PATH" value="logs/${SERVICE_NAME}"/>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -31,33 +31,34 @@
 		</encoder>
 	</appender>
 
-<!--	<appender name="JSON_SOCKET" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
-<!--		<remoteHost>${LOGSTASH_HOST}</remoteHost>-->
-<!--		<port>${LOGSTASH_PORT}</port>-->
-<!--		<keepAliveDuration>1 minute</keepAliveDuration>-->
-<!--		<reconnectionDelay>3 second</reconnectionDelay>-->
-<!--		<writeBufferSize>16384</writeBufferSize>-->
-<!--		<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
-<!--			<includeContext>false</includeContext>-->
-<!--			<includeCallerData>true</includeCallerData>-->
-<!--			<fieldNames>-->
-<!--				<timestamp>timestamp</timestamp>-->
-<!--				<version>[ignore]</version>-->
-<!--				<levelValue>[ignore]</levelValue>-->
-<!--			</fieldNames>-->
-<!--			<customFields>{"appname":"${SERVICE_NAME}", "hostname":"${HOSTNAME}", "profiles":"${ACTIVE_PROFILES}"}</customFields>-->
-<!--		</encoder>-->
-<!--	</appender>-->
+	<appender name="JSON_SOCKET" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<remoteHost>${LOGSTASH_HOST}</remoteHost>
+		<port>${LOGSTASH_PORT}</port>
+		<keepAliveDuration>1 minute</keepAliveDuration>
+		<reconnectionDelay>3 second</reconnectionDelay>
+		<writeBufferSize>16384</writeBufferSize>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<includeContext>false</includeContext>
+			<includeCallerData>true</includeCallerData>
+			<fieldNames>
+				<timestamp>timestamp</timestamp>
+				<version>[ignore]</version>
+				<levelValue>[ignore]</levelValue>
+			</fieldNames>
+			<customFields>{"appname":"${SERVICE_NAME}", "hostname":"${HOSTNAME}", "profiles":"${ACTIVE_PROFILES}"}</customFields>
+		</encoder>
+	</appender>
 
 	<springProfile name="local">
 		<logger name="hibernate.SQL" level="DEBUG"/>
 		<logger name="hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 		<logger name="jdbc.core.JdbcTemplate" level="DEBUG"/>
 		<logger name="jdbc.core.StatementCreatorUtils" level="TRACE"/>
-
+		<logger name="kr.co.agramar.demo.api.mapper" level="DEBUG"/>
 		<root level="INFO">
 			<appender-ref ref="CONSOLE"/>
 			<appender-ref ref="FILE"/>
+			<appender-ref ref="JSON_SOCKET"/>
 		</root>
 	</springProfile>
 	<springProfile name="dev">

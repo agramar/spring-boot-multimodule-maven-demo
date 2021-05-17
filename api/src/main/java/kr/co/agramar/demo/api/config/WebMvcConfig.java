@@ -1,6 +1,6 @@
-package kr.co.agramar.demo.core.config;
+package kr.co.agramar.demo.api.config;
 
-import kr.co.agramar.demo.core.interceptor.DemoInterceptor;
+import kr.co.agramar.demo.api.interceptor.DemoInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;

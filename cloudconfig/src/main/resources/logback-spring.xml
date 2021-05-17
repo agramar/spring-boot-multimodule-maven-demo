@@ -8,8 +8,8 @@
 	<springProperty scope="context" name="LOGSTASH_HOST" source="logging.logstash.host"/>
 	<springProperty scope="context" name="LOGSTASH_PORT" source="logging.logstash.port"/>
 
-	<property name="LOG_FILE_PREFIX" value="api"/>
-	<property name="LOG_PATH" value="logs/api"/>
+	<property name="LOG_FILE_PREFIX" value="${SERVICE_NAME}"/>
+	<property name="LOG_PATH" value="logs/${SERVICE_NAME}"/>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
