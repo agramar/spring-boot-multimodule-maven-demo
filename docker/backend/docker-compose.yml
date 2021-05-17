@@ -6,7 +6,6 @@ services:
       context: mariadb/
       args:
         MARIADB_VERSION: $MARIADB_VERSION
-    container_name: mariadb-$MARIADB_VERSION
     ports:
       - "3306:3306"
     volumes:
@@ -34,7 +33,7 @@ services:
       - "6379:6379"
     volumes:
       - ./redis/redis.conf/:/usr/local/etc/redis.conf
-      - ./redis/redis.log:/usr/local/redis/redis.log
+      - ./redis/logs/redis.log:/usr/local/redis/redis.log
       - ./redis/data:/usr/local/redis/data
     networks:
       - backend

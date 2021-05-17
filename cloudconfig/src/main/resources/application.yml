@@ -1,0 +1,28 @@
+server:
+  port: ${config.server.port:8070}
+
+spring:
+  application:
+    name: cloud-config
+  profiles:
+    active: native
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:config

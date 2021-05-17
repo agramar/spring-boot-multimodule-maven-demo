@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: batch
+  profiles:
+    active: local
+  config:
+    import: "configserver:"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  cloud:
+    config:
+      uri: http://localhost:8070
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    config:
+      uri: http://localhost:8070
+
+---
+spring:
+  config:
+    activate:
+      on-profile: stag
+  cloud:
+    config:
+      uri: http://localhost
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  cloud:
+    config:
+      uri: http://localhost
