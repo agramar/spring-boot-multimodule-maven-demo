@@ -10,5 +10,5 @@ import java.time.LocalDateTime;
 public class DemoVO {
 	private Long id;
 	private String description;
-	private LocalDateTime regDt;
+	private LocalDateTime regDate;
 }

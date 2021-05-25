@@ -39,6 +39,7 @@ spring:
   redis:
     host: localhost
     port: 6379
+    password: changeme
     lettuce:
       pool:
         max-active: 4

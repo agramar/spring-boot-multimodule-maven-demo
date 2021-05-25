@@ -7,12 +7,12 @@ import kr.co.agramar.demo.api.model.vo.DemoVO;
 import kr.co.agramar.demo.api.repository.DemoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,15 +23,13 @@ public class DemoService {
 	private final DemoMapper demoMapper;
 	private final DemoRepository demoRepository;
 
-	private final ModelMapper modelMapper;
-
 	public void saveDemo(DemoEntity demoEntity) {
 		demoRepository.save(demoEntity);
 	}
 
 	public List<DemoDTO> selectDemoList() {
 		List<DemoVO> demoVOList = demoMapper.selectDemoList();
-		return modelMapper.map(demoVOList, new TypeToken<List<DemoDTO>>() {}.getType());
+		return demoVOList.stream().map(DemoDTO::of).collect(Collectors.toList());
 	}
 
 	public List<DemoVO> saveAndSelectList(DemoEntity demoEntity) {
@@ -40,5 +38,11 @@ public class DemoService {
 		List<DemoVO> demoVOList = demoMapper.selectDemoList();
 		log.info("demoVOList : {}", demoVOList);
 		return demoVOList;
+	}
+
+	@Cacheable(cacheNames = "findDemoById", key = "#id", unless="#result == null")
+	public DemoDTO findVerySlowQueryDemoDTOById(Long id) throws InterruptedException {
+		Thread.sleep(1000);
+		return DemoDTO.of(demoRepository.findById(id).orElse(null));
 	}
 }
