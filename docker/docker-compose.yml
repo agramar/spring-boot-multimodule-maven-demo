@@ -1,0 +1,171 @@
+version: "3.7"
+
+services:
+  #  mariadb:
+  #    build:
+  #      context: mariadb/
+  #      args:
+  #        MARIADB_VERSION: $MARIADB_VERSION
+  #    ports:
+  #      - "3306:3306"
+  #    volumes:
+  #      - ./mariadb/conf.d:/etc/mysql/conf.d
+  #      - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
+  #      - ./mariadb/data:/var/lib/mysql
+  #    env_file: .env
+  #    environment:
+  #      MYSQL_HOST: localhost
+  #      MYSQL_PORT: 3306
+  #      MYSQL_ROOT_PASSWORD: root0!
+  #      MYSQL_DATABASE: agramar
+  #      MYSQL_USER: agramar
+  #      MYSQL_PASSWORD: agramar0!
+  #      TZ: Asia/Seoul
+  #    networks:
+  #      - backend
+
+  redis:
+    image: redis:$REDIS_VERSION
+    command: redis-server --port 6379
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+
+  zoo:
+    image: zookeeper:$ZK_VERSION
+    hostname: zoo
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zoo:2888:3888
+    #    volumes:
+    #      - ./zk-single-kafka-single/zoo1/data:/data
+    #      - ./zk-single-kafka-single/zoo1/datalog:/datalog
+    networks:
+      - backend
+
+  kafka:
+    image: confluentinc/cp-kafka:$KAFKA_VERSION
+    hostname: kafka
+    ports:
+      - 9092:9092
+      - 9999:9999
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: ${DOCKER_HOST_IP:-127.0.0.1}
+    #    volumes:
+    #      - ./zk-single-kafka-single/kafka1/data:/var/lib/kafka/data
+    depends_on:
+      - zoo
+    networks:
+      - backend
+
+  elasticsearch:
+    build:
+      context: elasticsearch
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: elasticsearch
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+      discovery.type: single-node
+    networks:
+      - backend
+
+  logstash:
+    build:
+      context: logstash
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
+    networks:
+      - backend
+
+  kibana:
+    build:
+      context: kibana
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - backend
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+#    restart: no
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+#    restart: no
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  elasticsearch:
+  prom_data:

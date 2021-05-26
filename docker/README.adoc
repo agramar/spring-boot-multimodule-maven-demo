@@ -1,0 +1,19 @@
+= Docker
+
+- WSL2, DOCKER 설치 필수
+- 로컬 개발 환경을 위한 docker-compose 설정 파일
+
+[source,shell]
+----
+docker-compose up -d
+docker-compose ps
+docker-compose down
+----
+
+== backend
+- mariadb : 주석
+- zookeeper-kafka
+- redis
+- elasticsearch
+- logstash
+- kibana
