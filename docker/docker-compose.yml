@@ -1,28 +1,28 @@
 version: "3.7"
 
 services:
-  #  mariadb:
-  #    build:
-  #      context: mariadb/
-  #      args:
-  #        MARIADB_VERSION: $MARIADB_VERSION
-  #    ports:
-  #      - "3306:3306"
-  #    volumes:
-  #      - ./mariadb/conf.d:/etc/mysql/conf.d
-  #      - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
-  #      - ./mariadb/data:/var/lib/mysql
-  #    env_file: .env
-  #    environment:
-  #      MYSQL_HOST: localhost
-  #      MYSQL_PORT: 3306
-  #      MYSQL_ROOT_PASSWORD: root0!
-  #      MYSQL_DATABASE: agramar
-  #      MYSQL_USER: agramar
-  #      MYSQL_PASSWORD: agramar0!
-  #      TZ: Asia/Seoul
-  #    networks:
-  #      - backend
+  mariadb:
+    build:
+      context: mariadb/
+      args:
+        MARIADB_VERSION: $MARIADB_VERSION
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mariadb/conf.d:/etc/mysql/conf.d
+      - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
+      - ./mariadb/data:/var/lib/mysql
+    env_file: .env
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root0!
+      MYSQL_DATABASE: agramar
+      MYSQL_USER: agramar
+      MYSQL_PASSWORD: agramar0!
+      TZ: Asia/Seoul
+    networks:
+      - backend
 
   redis:
     image: redis:$REDIS_VERSION
@@ -145,22 +145,26 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - 9090:9090
-#    restart: no
     volumes:
       - ./prometheus:/etc/prometheus
       - prom_data:/prometheus
+    networks:
+      - backend
 
   grafana:
     image: grafana/grafana
     container_name: grafana
     ports:
       - 3000:3000
-#    restart: no
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
       - ./grafana:/etc/grafana/provisioning/datasources
+    networks:
+      - backend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   backend:

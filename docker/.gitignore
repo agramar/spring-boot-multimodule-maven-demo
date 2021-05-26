@@ -2,7 +2,7 @@ data/
 logs/
 **/data/
 **/datalog/
-**/**/data/
+mariadb/data/
 **/**/datalog/
 zk-single-kafka-single/
 
