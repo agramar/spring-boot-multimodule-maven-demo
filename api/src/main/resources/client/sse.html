@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<script>
+	var eventSource;
+
+	function start() { // when "Start" button pressed
+
+		document.getElementById('logElem').innerHTML = '';
+
+		if (!window.EventSource) {
+			alert("The browser doesn't support EventSource.");
+			return;
+		}
+
+		eventSource = new EventSource('http://localhost:8080/demo-sse/demo-stream');
+
+		eventSource.addEventListener('MESSAGE', (event) => {
+			console.log(event);
+			document.getElementById('logElem').innerHTML += event.data + "<br>";
+			document.documentElement.scrollTop = 99999999;
+		});
+
+		eventSource.addEventListener('COMPLETE', (event) => {
+			console.log(event);
+			eventSource.close();
+		});
+
+		eventSource.onerror = (event) => {
+			console.log(event);
+			eventSource.close();
+		};
+	}
+
+	function stop() { // when "Stop" button pressed
+		eventSource.close();
+	}
+
+</script>
+
+<button onclick="start()">Start</button> Press the "Start" to begin.
+<div id="logElem" style="margin: 6px 0"></div>
+<button onclick="stop()">Stop</button> "Stop" to finish.

@@ -50,11 +50,6 @@
 	</appender>
 
 	<springProfile name="local">
-		<logger name="hibernate.SQL" level="DEBUG"/>
-		<logger name="hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
-		<logger name="jdbc.core.JdbcTemplate" level="DEBUG"/>
-		<logger name="jdbc.core.StatementCreatorUtils" level="TRACE"/>
-		<logger name="kr.co.agramar.demo.api.mapper" level="DEBUG"/>
 		<root level="INFO">
 			<appender-ref ref="CONSOLE"/>
 			<appender-ref ref="JSON_SOCKET"/>

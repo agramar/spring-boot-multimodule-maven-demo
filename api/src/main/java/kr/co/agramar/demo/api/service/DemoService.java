@@ -8,10 +8,13 @@ import kr.co.agramar.demo.api.repository.DemoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -44,5 +47,11 @@ public class DemoService {
 	public DemoDTO findVerySlowQueryDemoDTOById(Long id) throws InterruptedException {
 		Thread.sleep(1000);
 		return DemoDTO.of(demoRepository.findById(id).orElse(null));
+	}
+
+	@Async
+	public CompletableFuture<DemoDTO> findDemoAsync(Long id) throws InterruptedException {
+		Thread.sleep(new Random().nextInt(10000));
+		return CompletableFuture.completedFuture(DemoDTO.of(demoRepository.findById(id).orElse(null)));
 	}
 }
