@@ -51,7 +51,7 @@ public class DemoService {
 
 	@Async
 	public CompletableFuture<DemoDTO> findDemoAsync(Long id) throws InterruptedException {
-		Thread.sleep(new Random().nextInt(10000));
+		Thread.sleep(new Random().nextInt(2000));
 		return CompletableFuture.completedFuture(DemoDTO.of(demoRepository.findById(id).orElse(null)));
 	}
 }

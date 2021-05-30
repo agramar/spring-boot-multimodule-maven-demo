@@ -1,4 +1,4 @@
-package kr.co.agramar.demo.batch;
+package kr.co.agramar.demo.cloudconfig;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,12 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-@DisplayName("Batch Application 테스트")
-class BatchApplicationTest {
+@DisplayName("CloudConfigApplication 테스트")
+class CloudConfigApplicationTest {
 
-    @Test
-	@DisplayName("Batch Application ContextLoad 정상 동작 확인")
-    void contextLoads() {
+	@Test
+	@DisplayName("CloudConfigApplication ContextLoad 정상 동작 확인")
+	void contextLoads() {
 		assertTrue(true);
-    }
+	}
+
 }

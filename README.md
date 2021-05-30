@@ -20,4 +20,5 @@
 https://www.kaggle.com/rounakbanik/the-movies-dataset
 
 ## To do
-- []
+- jdbc logging
+- Slueth trace id

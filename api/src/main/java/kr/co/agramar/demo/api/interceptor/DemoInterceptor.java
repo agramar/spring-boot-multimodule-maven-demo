@@ -11,17 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class DemoInterceptor implements HandlerInterceptor {
 
+	private static final String START_TIME_KEY = "startTime";
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) {
 		log.info("requestUri : {}", request.getRequestURI());
-		request.setAttribute("startTime", System.currentTimeMillis());
+		request.setAttribute(START_TIME_KEY, System.currentTimeMillis());
 		return true;
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) {
-		long startTime = (Long) request.getAttribute("startTime");
-		request.removeAttribute("startTime");
+		long startTime = (Long) request.getAttribute(START_TIME_KEY);
+		request.removeAttribute(START_TIME_KEY);
 
 		long endTime = System.currentTimeMillis();
 		log.info("elapsed time : {}ms", endTime - startTime);

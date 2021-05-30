@@ -3,7 +3,6 @@ package kr.co.agramar.demo.api.service;
 import kr.co.agramar.demo.api.model.dto.response.DemoDTO;
 import kr.co.agramar.demo.core.entity.jpa.DemoEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @Transactional
@@ -29,6 +30,10 @@ class DemoServiceTest {
 		demoService.saveDemo(DemoEntity.builder()
 			.description("????????????")
 			.build());
+
+		List<DemoDTO> demoList = demoService.selectDemoList();
+
+		assertTrue(demoList.size() > 0);
 	}
 
 	@Test
@@ -36,7 +41,7 @@ class DemoServiceTest {
 	void testSelectDemoList() {
 		List<DemoDTO> demoList = demoService.selectDemoList();
 		log.info("demoList : {}", demoList);
-		Assertions.assertNotNull(demoList);
+		assertNotNull(demoList);
 	}
 
 	@Test
@@ -46,7 +51,7 @@ class DemoServiceTest {
 		for (Long demoId : demoIds) {
 			DemoDTO nonCachedDemo = demoService.findVerySlowQueryDemoDTOById(demoId);
 			DemoDTO cachedDemo = demoService.findVerySlowQueryDemoDTOById(demoId);
-			Assertions.assertEquals(nonCachedDemo, cachedDemo);
+			assertEquals(nonCachedDemo, cachedDemo);
 		}
 	}
 }

@@ -59,7 +59,7 @@ public class DemoSseController {
 							.id(String.valueOf(System.currentTimeMillis()))
 							.name("COMPLETE"));
 					} catch (IOException e) {
-						e.printStackTrace();
+						log.error(e.getMessage(), e);
 					}
 					sseEmitter.complete();
 					log.info("event stream complete");
