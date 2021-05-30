@@ -1,10 +1,10 @@
 package kr.co.agramar.demo.api.service;
 
-import kr.co.agramar.demo.api.entity.DemoEntity;
 import kr.co.agramar.demo.api.mapper.DemoMapper;
 import kr.co.agramar.demo.api.model.dto.response.DemoDTO;
 import kr.co.agramar.demo.api.model.vo.DemoVO;
-import kr.co.agramar.demo.api.repository.DemoRepository;
+import kr.co.agramar.demo.core.entity.jpa.DemoEntity;
+import kr.co.agramar.demo.core.repository.jpa.DemoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;

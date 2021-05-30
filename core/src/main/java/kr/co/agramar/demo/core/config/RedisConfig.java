@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @RequiredArgsConstructor
-@EnableRedisRepositories
+@EnableRedisRepositories(basePackages = "kr.co.agramar.demo.*.*.redis")
 @Configuration
 public class RedisConfig {
 

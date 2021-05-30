@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <script>
-	var eventSource;
+	let eventSource;
 
-	function start() { // when "Start" button pressed
+	function start() {
 
-		document.getElementById('logElem').innerHTML = '';
+		document.getElementById('log').innerHTML = '';
 
 		if (!window.EventSource) {
 			alert("The browser doesn't support EventSource.");
@@ -15,7 +15,7 @@
 
 		eventSource.addEventListener('MESSAGE', (event) => {
 			console.log(event);
-			document.getElementById('logElem').innerHTML += event.data + "<br>";
+			document.getElementById('log').innerHTML += event.data + "<br>";
 			document.documentElement.scrollTop = 99999999;
 		});
 
@@ -30,12 +30,10 @@
 		};
 	}
 
-	function stop() { // when "Stop" button pressed
+	function stop() {
 		eventSource.close();
 	}
 
 </script>
-
-<button onclick="start()">Start</button> Press the "Start" to begin.
-<div id="logElem" style="margin: 6px 0"></div>
-<button onclick="stop()">Stop</button> "Stop" to finish.
+<button onclick="start()">Start</button><button onclick="stop()">Stop</button>
+<div id="log" style="margin: 6px 0"></div>

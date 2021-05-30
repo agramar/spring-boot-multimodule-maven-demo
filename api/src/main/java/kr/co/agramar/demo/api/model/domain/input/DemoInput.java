@@ -1,4 +1,4 @@
-package kr.co.agramar.demo.api.domain.input;
+package kr.co.agramar.demo.api.model.domain.input;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package kr.co.agramar.demo.api.model.dto.response;
 
-import kr.co.agramar.demo.api.entity.DemoEntity;
+import kr.co.agramar.demo.core.entity.jpa.DemoEntity;
 import kr.co.agramar.demo.api.model.vo.DemoVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

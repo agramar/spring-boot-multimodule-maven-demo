@@ -1,4 +1,4 @@
-package kr.co.agramar.demo.api.entity;
+package kr.co.agramar.demo.core.entity.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,18 +14,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "demo")
+@Table(name = "DEMO")
 public class DemoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "description")
+	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(name = "reg_dt")
+	@Column(name = "REG_DT")
 	@CreationTimestamp
 	private LocalDateTime regDate;
 }

@@ -1,4 +1,4 @@
-package kr.co.agramar.demo.api.domain;
+package kr.co.agramar.demo.api.model.domain;
 
 import lombok.Builder;
 import lombok.Value;

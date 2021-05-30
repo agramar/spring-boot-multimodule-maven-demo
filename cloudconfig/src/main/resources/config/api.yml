@@ -11,6 +11,18 @@ spring:
     activate:
       on-profile: local
 
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+        enabled: true
+    redis:
+      repositories:
+        enabled: true
+    elasticsearch:
+      repositories:
+        enabled: true
+
   datasource:
     username: agramar
     password: agramar0!
@@ -46,6 +58,14 @@ spring:
         max-idle: 4
         min-idle: 2
 
+  elasticsearch:
+    rest:
+      uris: localhost:9200
+      username:
+      password:
+      connection-timeout: 5s
+      read-timeout: 30s
+
   kafka:
     bootstrap-servers: localhost:9092
     producer:
@@ -62,7 +82,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: kr.co.agramar.demo.api.model.vo
+  type-aliases-package: kr.co.agramar.demo.*.model.vo
   configuration:
     mapUnderscoreToCamelCase: true
     lazyLoadingEnabled: true
@@ -72,6 +92,9 @@ mybatis:
     returnInstanceForEmptyRow: true
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   endpoints:
     web:
       base-path: /actuator

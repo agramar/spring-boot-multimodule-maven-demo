@@ -1,8 +1,7 @@
 package kr.co.agramar.demo.api.service;
 
-import kr.co.agramar.demo.api.entity.DemoEntity;
 import kr.co.agramar.demo.api.model.dto.response.DemoDTO;
-import kr.co.agramar.demo.api.model.vo.DemoVO;
+import kr.co.agramar.demo.core.entity.jpa.DemoEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,11 +14,11 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
+@Transactional
 @ConditionalOnProperty(value = "graphql.servlet.enabled", havingValue = "true", matchIfMissing = true)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
 @DisplayName("데모 서비스 테스트")
-public class DemoServiceTest {
+class DemoServiceTest {
 
 	@Autowired
 	private DemoService demoService;
@@ -38,19 +37,6 @@ public class DemoServiceTest {
 		List<DemoDTO> demoList = demoService.selectDemoList();
 		log.info("demoList : {}", demoList);
 		Assertions.assertNotNull(demoList);
-	}
-
-	@Test
-	@DisplayName("데모 서비스 트랜잭션 작동 테스트")
-	void testTransaction() {
-
-		List<DemoDTO> demoList = demoService.selectDemoList();
-
-		List<DemoVO> demoVOList2 = demoService.saveAndSelectList(DemoEntity.builder()
-			.description("😂")
-			.build());
-
-		Assertions.assertEquals(demoList.size() + 1, demoVOList2.size());
 	}
 
 	@Test

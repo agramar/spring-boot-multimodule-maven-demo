@@ -1,9 +1,9 @@
 package kr.co.agramar.demo.api.resolver.query;
 
 import graphql.kickstart.tools.GraphQLQueryResolver;
-import kr.co.agramar.demo.api.domain.Demo;
-import kr.co.agramar.demo.api.entity.DemoEntity;
-import kr.co.agramar.demo.api.repository.DemoRepository;
+import kr.co.agramar.demo.api.model.domain.Demo;
+import kr.co.agramar.demo.core.entity.jpa.DemoEntity;
+import kr.co.agramar.demo.core.repository.jpa.DemoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,10 @@
 package kr.co.agramar.demo.api.resolver.mutation;
 
 import graphql.kickstart.tools.GraphQLMutationResolver;
-import kr.co.agramar.demo.api.domain.Demo;
-import kr.co.agramar.demo.api.domain.input.DemoInput;
-import kr.co.agramar.demo.api.entity.DemoEntity;
-import kr.co.agramar.demo.api.repository.DemoRepository;
+import kr.co.agramar.demo.api.model.domain.Demo;
+import kr.co.agramar.demo.api.model.domain.input.DemoInput;
+import kr.co.agramar.demo.core.entity.jpa.DemoEntity;
+import kr.co.agramar.demo.core.repository.jpa.DemoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

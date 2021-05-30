@@ -1,12 +1,23 @@
 # spring-boot-multi-module-maven-demo
 
-## 모듈 구성
+## modules
 - root
 - core
 - cloudconfig
 - api
 - batch
 
-## 도커
-- backend : mariadb, redis, zookeeper, kafka
-- elk : elasticsearch, logstash, kibana
+## docker-compose
+- mariadb
+- redis
+- zookeeper
+- kafka
+- elasticsearch
+- logstash
+- kibana
+
+## dataset
+https://www.kaggle.com/rounakbanik/the-movies-dataset
+
+## To do
+- []

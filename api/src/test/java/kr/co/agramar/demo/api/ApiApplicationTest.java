@@ -1,15 +1,15 @@
 package kr.co.agramar.demo.api;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@ConditionalOnProperty(value = "graphql.servlet.enabled", havingValue = "true", matchIfMissing = true)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ApiApplicationTests {
+@DisplayName("API Application 테스트")
+class ApiApplicationTest {
 
     @Test
+	@DisplayName("API Application ContextLoad 정상 동작 확인")
     void contextLoads() {
     }
-
 }
